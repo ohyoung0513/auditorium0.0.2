@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>alert</title>
+    <style> 
+    /*這裡寫css*/
+        body{
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: url(image/alert/WebBG_yg\ 2.png);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .main{
+            /* height: 731px;
+            width: 838px; */
+            height: 85vh;
+            width: 40vw;
+            background-color: white;
+            border: 20px ;
+            border-color: #C0DA44;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+        .mark{
+            padding-top: 5vh;
+            width: 123px;
+            height: 123px;
+        }
+        .text{
+            margin-bottom: 2vh;
+            text-align: center;
+            font-size: 35px;
+        }
+        .ps{
+            margin-bottom: 2vh;
+            font-size: 35px;
+            color: gray;
+        }
+        .pss{
+            margin-bottom: 2vh;
+            font-size: 25px;
+            color: #9A9A9A;
+        }
+        button{
+            height: 12vh;
+            width: 419px;
+            border-radius: 20px;
+            border: 0px;
+            background-color: #C0DA44;
+            font-size: 40px;
+            font-weight: bold;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="main">
+        <img class="mark" src="image/alert/Group 28.png">
+        <div class="text">
+            以下含有辱罵、諷刺之內容<br>可能造成您的不適
+        </div>
+        <div class="ps">
+            *此為試玩版*
+        </div>
+        <div class="pss">
+            已將劇情精簡化以方便試玩
+        </div>
+        <button>確 認</button>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function startTimer() {
+            // 記錄計時器的起始時間
+            localStorage.setItem('startTime', new Date().getTime());
+        }
+
+        $(document).ready(function(){
+            $('button').click(function(){
+                window.location.href='video.html';  /*下一頁的html就接在這裡*/
+                startTimer();
+            })
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>朝會ing</title>
+  <!--Bootstrap CSS-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+</head>
+<style>
+  canvas {
+    position: relative;
+    left: 30%;
+    top: 50%;
+    max-width: 100vw;
+    max-height: 100vh;
+  }
+
+  .character-status{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url(image/morning-ing/character-status-1.png);
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .character-status2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url(image/morning-ing/character-status-2.png);
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .character-status3{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url(image/morning-ing/character-status-3.png);
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  /* .pic-character{
+    margin-top: 50vh;
+    width: 20vw;
+  } */
+
+  .people-look{
+    width: 100vw;
+    /* height: 50vh; */
+  }
+
+  .pic-look{
+    height: 25vh;/*跟flexbox-look一樣高*/
+    object-fit: contain;
+  }
+
+  .flexbox-look{
+    position: relative;
+    margin-top: 5vh;
+    height: 25vh;
+    display: flex;
+    justify-content: space-around;    
+  }
+
+  .enter-after-morning{
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 5%;
+  }
+
+  .enter-after-morning button{
+    height: 5vh;
+    width: 10vw;
+    border: 2px solid black;
+    background-color: #C3DD45;
+    cursor: pointer;
+  }
+
+</style>
+
+<body>
+  <div class="container front-story">
+    <div class="content col-12">
+      <!-- <p>我是前面的內容Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias perspiciatis sequi quis optio fuga, non nisi architecto voluptate laudantium itaque repudiandae, odio fugiat aut. Unde, ad ut? Alias, corporis neque!</p> -->
+      <img src="image/morning-ing/morning-front.jpg" class="w-100">
+    </div>
+  </div>
+
+  <div class="visual-effect">
+    <div class="content" >
+      <!-- apple airpods效果，用canvas渲染 -->
+      <!-- <canvas id="character"></canvas> -->
+      <div class="character-status">
+        <!-- 現在用bg image做湘雲的反應，下面的是直接圖片 -->
+        <!-- <img src="image/morning-ing/character-status-1.png" class="pic-character"> -->
+
+        <div class="people-look">
+          <div class="flexbox-look look-horizontal-group-01">
+            <img src="image/morning-ing/look-01.png" class="pic-look" style="position:absolute; margin-right: 70%;">
+            <img src="image/morning-ing/look-02.png" class="pic-look" style="position:absolute; margin-top: 5%; margin-left: 70%;">
+          </div>
+          <div class="flexbox-look look-horizontal-group-02">
+            <img src="image/morning-ing/look-03.png" class="pic-look" style="position:absolute; margin-right: 70%;">
+            <img src="image/morning-ing/look-04.png" class="pic-look" style="position:absolute; margin-left: 70%;">
+          </div>
+          <div class="flexbox-look look-horizontal-group-03">
+            <img src="image/morning-ing/look-05.png" class="pic-look" style="position:absolute; margin-top: -5%; margin-right: 70%;">
+            <img src="image/morning-ing/look-06.png" class="pic-look" style="position:absolute; margin-left: 30%;">
+            <img src="image/morning-ing/look-07.png" class="pic-look" style="position:absolute; margin-left: 70%;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container back-story">
+    <div class="content col-12">
+      <!-- <p>我是之後的內容Lorem ipsum dolor sit amet consectetur adipisicing elit. At, expedita vel? Optio iure illo accusamus pariatur dignissimos recusandae minima quas voluptate, quo, eveniet nam, laborum aperiam doloremque minus! Recusandae, exercitationem.</p> -->
+      <img src="image/morning-ing/morning-back.png" class="w-100">
+    </div>
+    <div class="enter-after-morning" style="display: flex; justify-content: flex-end; margin-bottom: 5%;">
+      <a href="chapter2-page.html"><button>進入章節二</button></a>
+    </div>
+  </div>
+
+  <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.27/bundled/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <script>
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    //smooth scroll
+    //會爆炸
+
+    //固定湘雲整個區塊(含look)/湘雲的狀態1階
+    // gsap.to(".character-status", {
+    //   scrollTrigger: {
+    //     trigger: ".back-story",
+    //     start: "top 95%",
+    //     end: () => `+=${document.querySelector(".character-status").offsetHeight}`,
+    //     scrub: 2, //讓滾輪控制動畫，數值代表平滑程度
+    //     //toggleActions: "restart none none none",
+    //     pin:".character-status",
+    //     //markers: true,
+    //   },
+    // })
+
+    //換gsap.to、trigger element試試，不用ScrollTrigger.create
+    // gsap.to(".character-status", {
+    //   scrollTrigger: {
+    //     trigger: ".look-horizontal-group-01",
+    //     start: "center top",
+    //     end: "center center",
+    //     toggleClass: {targets: ".character-status", className: "character-status2"},
+    //     markers: true
+    //   }
+    // })
+
+
+    //湘雲的狀態2階
+    // ScrollTrigger.create({
+    //   trigger: ".character-status",
+    //   start: "center top",
+    //   end: "center center",
+    //   toggleClass: {targets: ".character-status", className: "character-status2"},
+    //   markers: true
+    // });
+
+    //湘雲的狀態3階
+    // ScrollTrigger.create({
+    //   trigger: ".character-status",
+    //   start: "bottom top",
+    //   end: "bottom top",
+    //   toggleClass: {targets: ".character-status", className: "character-status3"},
+    //   //markers:{startColor: "pink", endColor: "pink"}
+    // });
+
+
+    lookHorizontalGroupAnima();
+    centerGirl();
+
+    function centerGirl(){
+      const centerGirl = document.getElementsByClassName('character-status');
+
+      //固定湘雲整個區塊(含look)/湘雲的狀態1-3階
+      let t1 = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".back-story",
+          start: "top 95%",
+          //end: () => `+=${document.querySelector(".character-status").offsetHeight}`,
+          end: "center bottom-=10%",
+          scrub: true,
+          pin: ".character-status",
+          toggleClass: {targets: ".character-status", className: "character-status2"},
+          // markers: true,
+          onLeave: ()=> ScrollTrigger.create({
+            toggleClass: {targets: ".character-status", className: "character-status3"},
+            // markers:{startColor: "pink", endColor: "pink"}
+          }),
+        }
+      });
+    }
+
+    function lookHorizontalGroupAnima(){
+      //stagger好像在純動畫裡面用比較好，在這邊功能會跟scrub相衝突
+      //const allPicLook = document.getElementsByClassName('pic-look');
+
+      gsap.set(".pic-look", {autoAlpha: 0})
+
+      const tl = gsap.timeline({
+        defaults: {
+          ease:"expo",
+        },
+        scrollTrigger: {
+          trigger: ".character-status",
+          start: "top 20%",
+          scrub: 2, //讓滾輪控制動畫，數值代表平滑程度
+          //toggleActions: "restart none none none",
+          //markers: true
+        }
+      });
+
+      tl
+        //.to(allPicLook, {stagger: {each: 0.3}})
+        .to(".look-horizontal-group-01 img:nth-child(1)", {autoAlpha: 1, x: 350})
+        .to(".look-horizontal-group-01 img:nth-child(2)", {autoAlpha: 1, x: -300})
+        .to(".look-horizontal-group-02 img:nth-child(1)", {autoAlpha: 1, x: 250}, "-=0.3")
+        .to(".look-horizontal-group-02 img:nth-child(2)", {autoAlpha: 1, x: -360})
+        .to(".look-horizontal-group-03 img:nth-child(1)", {autoAlpha: 1, x: 350})
+        .to(".look-horizontal-group-03 img:nth-child(2)", {autoAlpha: 1, x: -100})
+        .to(".look-horizontal-group-03 img:nth-child(3)", {autoAlpha: 1, x: -200})
+    }
+
+  </script>
+
+</body>
+</html>

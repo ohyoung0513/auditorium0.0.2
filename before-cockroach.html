@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Before Cockroach</title>
+
+    <!--Bootstrap CSS-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body{
+        --main-color: #C3DD45;
+        overflow-x: hidden;
+      }
+
+      .eye-open{
+        height: 100vh; 
+        background-color: black;
+        margin: 0;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-image: url(image/cockroach/others-eyes-new.png);
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-bottom: 15vh;
+      }
+
+      .displacement {
+        filter: url(#displacementFilter3);
+      }
+
+      #eye-svg {
+        width: 50%;
+        height: 50vh;
+        /* position: absolute; */
+      }
+
+      .cockroach-area svg{
+        overflow:visible;
+      }
+
+      #cockroach-path{
+        display: none;
+      }
+
+      .item{
+        height: 100vh;
+        width: 100%;
+        background-image: url(image/cockroach/stare-at.png);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+
+      section{
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      section .scroll{
+        width: 122%;/*原本是100%*/
+        display: flex;
+        background-color: white;
+      }
+
+      section .scroll div{
+        background: white;
+        white-space: nowrap;
+        font-size: 3em;
+        font-weight: bold;
+        text-transform: uppercase;
+        animation: scroll-animate 40s linear infinite;
+        animation-delay: -40s;
+      }
+
+      section .scroll div:nth-child(2){/*有按鈕的話是(3)*/
+        animation: scroll-animate2 40s linear infinite;
+        animation-delay: -20s;
+      }
+
+      @keyframes scroll-animate{
+        0%{
+          transform: translateX(100%);/*translateX(0)代表原本、未加動畫前的位置*/
+        }
+        100%{
+          transform: translateX(-100%);
+        }
+      }
+
+      @keyframes scroll-animate2{
+        0%{
+          transform: translateX(0%);
+        }
+        100%{
+          transform: translateX(-200%);
+        }
+      }
+
+      section .scroll.text1{
+        border: 4px black solid;
+        transform: rotate(20deg) translateY(200px) translateX(-200px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      }
+      section .scroll.text2{
+        border: 4px black solid;
+        transform: rotate(-25deg) translateY(120px) translateX(-200px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      }
+      section .scroll.text3{
+        border: 4px black solid;
+        transform: rotate(15deg) translateY(300px) translateX(-200px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      }
+      section .scroll.text4{
+        border: 4px black solid;
+        transform: rotate(-2deg) translateY(-150px) translateX(-200px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      }
+      section .scroll.text5{
+        border: 4px black solid;
+        transform: rotate(5deg) translateY(250px) translateX(-200px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      }
+
+      button{
+        margin-left: 110px;
+        width: 50px;
+        height: 50px;
+      }
+
+      .js-button1,
+      .js-button2,
+      .js-button3,
+      .js-button4,
+      .js-button5{
+        width: 150px;
+        height: 72px;
+        border: none;
+        font-size: 3em;
+        z-index: 100;
+        background-color: var(--main-color);
+      }
+
+      .js-button1{
+        text-align: left;
+        margin-left: 1700px;
+      }
+
+      .js-button2{
+        text-align: right;
+        margin-left: 30px;
+      }
+
+      .js-button3{
+        text-align: right;
+        margin-left: 230px;
+      }
+
+      .js-button4{
+        text-align: left;
+        margin-left: 1600px;
+      }
+
+      .js-button5{
+        text-align: left;
+        margin-left: 1600px;
+      }
+      
+      .js-button1:hover img {
+        transform: scale(1.15);
+        -webkit-transition: all .5s;
+      }
+
+      .js-button2:hover img {
+        transform: scale(1.15);
+      }
+
+      .js-button3:hover img {
+        transform: scale(1.15);
+      }
+
+      .js-button4:hover img {
+        transform: scale(1.15);
+      }
+
+      .js-button5:hover img {
+        transform: scale(1.15);
+      }
+
+      .img-close{
+        transition: transform 330ms ease-in-out;
+      }
+
+      .enter-the-beautiest button{
+        height: 5vh;
+        width: 10vw;
+        border: 2px solid black;
+        background-color: #C3DD45;
+        cursor: pointer;
+      }
+
+      /*選擇區css*/
+  .choices{
+            margin: 10px,50px;
+            height: 50px;
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        .choice-btn{
+            background-color: #C3DD45;
+            color:black;
+            font-weight: 800;
+            align-items: center;
+        }
+
+        .choice-content {
+            display: none;
+        }
+
+        .btn1{
+          display: flex;
+          justify-content: center;
+        }
+        .btn2{
+          display: flex;
+          justify-content: center;
+        }
+        .btn3{
+          display: flex;
+          justify-content: center;
+        }
+  /*選擇區css*/
+
+    </style>
+  </head>
+
+  <body>
+    <div class="container front-story">
+      <div class="row col-12">
+        <img src="image/cockroach/cockroach-front.jpg">
+      </div>
+    </div>
+
+    <div class="eye-open">
+      <svg id="eye-svg" width="1000" height="560" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <filter id="displacementFilter3">
+            <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="3" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="80" result="displacement" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+          <mask id="pathMask">
+            <path id="myPath" viewBox = "0 0 600 200" preserveAspectRatio="xMidYMid slice" d="M 0 280 Q 500 280 1000 280 Q 500 280 0 280" fill="white" class="mask" style="filter: url(#displacementFilter3);"></path>
+          </mask>
+        </defs>
+        <image xlink:href="image/cockroach/eye-image-new.png" width="100%" height="100%" mask="url(#pathMask)" />
+      </svg>
+    </div>
+
+    <div class="container middle-story" style="z-index: 100;">
+      <div class="row col-12">
+        <img src="image/cockroach/cockroach-middle.jpg">
+      </div>
+    </div>
+
+    <div class="container cockroach-effect">
+      <div class="row col-12">
+        <div class="cockroach-path-content position-relative" style="z-index: 0;">
+          <img src="image/cockroach/cockroach-find-cockroach.jpg" class="w-100">
+        </div>
+        <div class="cockroach-area" style="position: absolute;">
+          <svg width="169" height="171" viewBox="0 0 169 171" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g id="cockroach-svg">
+              <path d="M107.54 53.3231C129.985 59.81 185.345 60.7504 227.226 12.6168" stroke="#3d0e0e" stroke-width="5" stroke-linecap="round"/>
+              <ellipse cx="61.5" cy="62" rx="61.5" ry="36" transform="rotate(-180 61.5 62)" fill="#3d0e0e"/>
+              <path d="M82.0001 94C84.0001 99.8333 86.8001 112.5 82.0001 116.5M59.5 94C60.6667 100.167 62.3 113.3 59.5 116.5M42 94C40.5 101.5 35.6 116.5 28 116.5M42 26.5C41.3333 22.1667 37.6 12.5 28 8.49999M59.5 26.5C62.3333 19.8333 66.3 5.8 59.5 3M78.5 29.5C83 27.8333 95.8 18.9 97 8.5" stroke="#3d0e0e" stroke-width="5" stroke-linecap="round"/>
+              <path d="M97.2465 66.5C134.58 73 206.347 99.8 194.747 155" stroke="#3d0e0e" stroke-width="5" stroke-linecap="round"/>
+            </g>
+          </svg>
+          <svg width="1181" height="905" viewBox="0 0 1181 905" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path id="cockroach-path" d="M145.339 1C47.9386 75.041 -97.9451 240.933 97.7269 312.172C342.317 401.222 1385.57 397.144 898.308 749.915C787 830.5 687.931 858.926 626 882.5C383 975 -44.6546 1160.2 651.414 1335" stroke="black" stroke-width="2"/>
+          </svg>  
+        </div>
+      </div>
+    </div>
+
+    <div class="kill-cockroach container">
+      <div class="row col-12">
+        <img src="image/cockroach/cockroach-kill-cockroach.jpg">
+      </div>
+    </div>
+    
+    <div class="lots-murmur position-relative">
+      <div class="item">
+        <!-- <button onclick="makeInfiniteClose1()" class="js-button1 position-absolute">X1</button> -->
+        <section>
+          <div class="scroll text1 js-text1">
+            <!-- <button onclick="makeInfiniteClose1()" class="js-button1 position-absolute">
+              <img src="image/close.png" style="object-fit: contain; height: 40px; padding-left: 15px; display: flex; align-items: center;" class="img-close">
+            </button> -->
+            <div>
+              她的抽屜到底裝了什麼會爬出蟑螂？她的抽屜到底裝了什麼會爬出蟑螂？她的抽屜到底裝了什麼會爬出蟑螂？
+            </div>
+            <div>
+              她的抽屜到底裝了什麼會爬出蟑螂？她的抽屜到底裝了什麼會爬出蟑螂？她的抽屜到底裝了什麼會爬出蟑螂？
+            </div>
+          </div>
+          <div class="scroll text2 js-text2">
+            <!-- <button onclick="makeInfiniteClose2()" class="js-button2 position-absolute">
+              <img src="image/close.png" style="object-fit: contain; height: 40px; padding-left: 80px; display: flex; align-items: center;" class="img-close">
+            </button> -->
+            <div>
+              教室裡出現蟑螂不是很正常嗎？路過而已吧？教室裡出現蟑螂不是很正常嗎？路過而已吧？
+            </div>
+            <div>
+              教室裡出現蟑螂不是很正常嗎？路過而已吧？教室裡出現蟑螂不是很正常嗎？路過而已吧？
+            </div>
+          </div>
+          <div class="scroll text3 js-text3">
+            <!-- <button onclick="makeInfiniteClose3()" class="js-button3 position-absolute">
+              <img src="image/close.png" style="object-fit: contain; height: 40px; padding-left: 80px; display: flex; align-items: center;" class="img-close">
+            </button> -->
+            <div>
+              好髒，不敢碰她的東西了。好髒，不敢碰她的東西了。好髒，不敢碰她的東西了。
+            </div>
+            <div>
+              好髒，不敢碰她的東西了。好髒，不敢碰她的東西了。好髒，不敢碰她的東西了。
+            </div>
+          </div>
+          <div class="scroll text4 js-text4">
+            <!-- <button onclick="makeInfiniteClose4()" class="js-button4 position-absolute">
+              <img src="image/close.png" style="object-fit: contain; height: 40px; padding-left: 15px; display: flex; align-items: center;" class="img-close">
+            </button> -->
+            <div>
+              好想換位置，我不想蟑螂爬過來！好想換位置，我不想蟑螂爬過來！好想換位置，我不想蟑螂爬過來！
+            </div>
+            <div>
+              好想換位置，我不想蟑螂爬過來！好想換位置，我不想蟑螂爬過來！好想換位置，我不想蟑螂爬過來！
+            </div>
+          </div>
+          <div class="scroll text5 js-text5">
+            <!-- <button onclick="makeInfiniteClose5()" class="js-button5 position-absolute">
+              <img src="image/close.png" style="object-fit: contain; height: 40px; padding-left: 20px; display: flex; align-items: center;" class="img-close">
+            </button> -->
+            <div>
+              亂講，蟑螂明明就只是路過，我都看到了。亂講，蟑螂明明就只是路過，我都看到了。
+            </div>
+            <div>
+              亂講，蟑螂明明就只是路過，我都看到了。亂講，蟑螂明明就只是路過，我都看到了。
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row col-12">
+        <img src="image/cockroach/cockroach-back.jpg">
+      </div>
+    </div>
+
+    <!--選擇區-->
+  <div class="choices">
+    <div class="col-md-4 btn1">
+      <button class="btn btn-primary col-10 choice-btn" onclick="makeChoice(1)">選擇分支 A</button>
+    </div>
+    <div class="col-md-4 btn2">
+      <button class="btn btn-primary col-10 choice-btn" onclick="makeChoice(2)">選擇分支 B</button>
+    </div>
+    <div class="col-md-4 btn3">
+      <button class="btn btn-primary col-10 choice-btn" onclick="makeChoice(3)">選擇分支 C</button>
+    </div>
+  </div>
+
+  <!-- 分支 A 的內容容器 -->
+  <div class="choice-content " id="branchA"></div>
+
+  <!-- 分支 B 的內容容器 -->
+  <div class="choice-content" id="branchB"></div>
+
+  <!-- 分支 C 的內容容器 -->
+  <div class="choice-content" id="branchC"></div>
+  </div>
+
+    
+  </body>
+
+  <!-- <script src="https://unpkg.com/@popperjs/core@2"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.27/bundled/lenis.min.js"></script> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
+    
+  <script>
+    gsap.registerPlugin(MotionPathPlugin);
+    gsap.registerPlugin(ScrollTrigger);
+  
+    //smooth scroll
+    // const lenis = new Lenis();
+
+    //Use button to close the text
+    // function makeInfiniteClose1(){
+    //   document.querySelector('.js-text1').style.opacity = 0;
+    //   document.querySelector('.js-button1').style.display = "none";
+    // }
+    // function makeInfiniteClose2(){
+    //   document.querySelector('.js-text2').style.opacity = 0;
+    //   document.querySelector('.js-button2').style.display = "none";
+    // }
+    // function makeInfiniteClose3(){
+    //   document.querySelector('.js-text3').style.opacity = 0;
+    //   document.querySelector('.js-button3').style.display = "none";
+    // }
+    // function makeInfiniteClose4(){
+    //   document.querySelector('.js-text4').style.opacity = 0;
+    //   document.querySelector('.js-button4').style.display = "none";
+    // }
+    // function makeInfiniteClose5(){
+    //   document.querySelector('.js-text5').style.opacity = 0;
+    //   document.querySelector('.js-button5').style.display = "none";
+    // }
+    
+    //eye open
+    function makeEyeOpen(){
+      const pathMask = document.getElementById("myPath");
+      const targetPath = "M 0 280 Q 500 800 1000 280 Q 500 -200 0 280";
+
+      let tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: ".eye-open",
+            start: "top top",
+            end: "center top",
+            scrub: true,
+            pin: true,
+            // markers: true,
+            toggleActions: 'play none none reverse'
+        }
+      });
+
+      tl.to(pathMask, {
+        duration: 1.5, 
+        attr: { d: targetPath }, 
+        ease: "power2.inOut" 
+      });
+    }
+
+    //cockroach path
+    function makeCockroachMove(){
+      let cockroachAnimation = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".cockroach-area",
+          start: "top top",
+          end: "center top",
+          scrub: 0.05,
+          pin: true,
+          // markers: true,
+          toggleActions: 'play none none reverse'
+        }
+      });
+
+      cockroachAnimation.to("#cockroach-svg",{
+        duration: 5,
+        ease: "none",
+        motionPath: {
+          path: "#cockroach-path",
+          align: "#cockroach-path",
+          alignOrigin: [0.5, 0.5],
+          autoRotate: true
+        }
+      });
+    }
+    
+    makeEyeOpen();
+    makeCockroachMove();
+
+    function makeChoice(choice) {
+        // 隱藏所有分支內容
+        document.querySelectorAll('.choice-content').forEach(content => {
+            content.style.display = 'none';
+        });
+
+        // 根據不同的選擇，顯示相應的分支內容
+        if (choice === 1) {
+            loadContent('branchA', 'cockroachA.html');
+        } else if (choice === 2) {
+            loadContent('branchB', 'cockroachB.html');
+        } else if (choice === 3) {
+            loadContent('branchC', 'cockroachC.html');
+        }
+
+        // 隱藏所有選項按鈕
+        document.querySelectorAll('.choice-btn').forEach(button => {
+            button.style.display = 'none';
+        });
+    }
+
+    function loadContent(contentId, contentPath) {
+        // 使用 AJAX 或其他方式動態加載內容
+        // 這裡使用簡單的示例，你可能需要使用更複雜的邏輯，例如使用 fetch API 或 jQuery.ajax
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', contentPath, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                // 將內容插入到對應的容器中
+                document.getElementById(contentId).innerHTML = xhr.responseText;
+                // 顯示內容
+                document.getElementById(contentId).style.display = 'block';
+            }
+        };
+        xhr.send();
+    }
+
+  </script>
+
+</html>

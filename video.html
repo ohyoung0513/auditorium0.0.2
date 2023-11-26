@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>前導影片</title>
+</head>
+<style>
+  body{
+    margin: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  .content{
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .video{
+    width: 80vw;
+  }
+
+  .go-next-web button{
+    height: 5vh;
+    width: 10vw;
+    border: 2px solid black;
+    background-color: #C3DD45;
+    cursor: pointer;
+  }
+
+</style>
+
+<body>
+
+  <div class="content">
+    <div class="video">
+      <!-- chrome瀏覽器在大多數情況下不允許自動播放。但是，始終允許靜音自動播放(+muted)。 -->
+      <video controls autoplay plays-inline width="100%">
+        <source src="image/video-page/trailer.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="go-next-web" style="margin-left: 5%;">
+      <a href="chapter1-page.html"><button>繼續</button></a>
+    </div>
+  </div>
+  
+</body>
+</html>
